@@ -1,0 +1,161 @@
+<div class="profile-layout d-flex">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2><i class="fas fa-users"></i> User Management</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li routerLink="/profile" routerLinkActive="active">
+          <i class="fas fa-user"></i> Profile
+        </li>
+        <li *ngIf="profile.role === 'ADMIN'" routerLink="/users" routerLinkActive="active">
+          <i class="fas fa-users-cog"></i> User List
+        </li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="theme-toggle">
+        <button (click)="toggleTheme()">
+          <i [class]="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+          {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+        </button>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Profile Content -->
+  <main class="profile-content container-fluid py-4">
+    <div class="profile-header mb-4">
+      <h2><i class="fas fa-user-circle"></i> My Profile</h2>
+      <p>Manage your account settings and personal information</p>
+    </div>
+
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-md-4">
+        <div class="profile-card mb-4">
+          <div class="card-header"><i class="fas fa-user"></i> Profile Summary</div>
+          <div class="card-body text-center">
+            <img src="assets/images/Profile.jpg" class="profile-img mb-3" alt="Profile Image">
+            <h5>{{ profile.firstName }} {{ profile.lastName }}</h5>
+            <span class="badge bg-primary mb-3">{{ profile.role }}</span>
+            <ul class="info-list list-unstyled text-start">
+              <li><i class="fas fa-envelope"></i> {{ profile.email }}</li>
+              <li><i class="fas fa-lightbulb"></i> {{ profile.skills }}</li>
+              <li><i class="fas fa-file"></i> <a [href]="profile.cvUrl" target="_blank">View CV</a></li>
+            </ul>
+            <button class="btn btn-primary w-100 mt-3"><i class="fas fa-edit"></i> Edit Profile</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-md-8">
+        <div class="profile-card profile-tabs">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview">
+                <i class="fas fa-info-circle"></i> Overview
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#edit-profile">
+                <i class="fas fa-edit"></i> Edit Profile
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content pt-3">
+            <!-- Overview -->
+            <div class="tab-pane fade show active" id="overview">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label>First Name</label>
+                  <div class="p-2 border rounded bg-light">{{ profile.firstName }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label>Last Name</label>
+                  <div class="p-2 border rounded bg-light">{{ profile.lastName }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label>Email Address</label>
+                  <div class="p-2 border rounded bg-light">{{ profile.email }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label>Role</label>
+                  <div class="p-2 border rounded bg-light">{{ profile.role }}</div>
+                </div>
+                <div class="col-12 mb-3">
+                  <label>Skills</label>
+                  <div class="p-2 border rounded bg-light">{{ profile.skills }}</div>
+                </div>
+                <div class="col-12 mb-3">
+                  <label>CV</label>
+                  <div class="p-2 border rounded bg-light">
+                    <a [href]="profile.cvUrl" target="_blank">View CV</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit Profile -->
+            <div class="tab-pane fade" id="edit-profile">
+              <form (ngSubmit)="onSubmit()" class="row g-3">
+                <div class="col-md-6">
+                  <label>First Name</label>
+                  <input type="text" [(ngModel)]="profile.firstName" name="firstName" class="form-control bg-light" required>
+                </div>
+                <div class="col-md-6">
+                  <label>Last Name</label>
+                  <input type="text" [(ngModel)]="profile.lastName" name="lastName" class="form-control bg-light" required>
+                </div>
+                <div class="col-md-6">
+                  <label>Email</label>
+                  <input type="email" [(ngModel)]="profile.email" name="email" class="form-control bg-light" required>
+                </div>
+                <div class="col-md-6">
+                  <label>Role</label>
+                  <select [(ngModel)]="profile.role" name="role" class="form-select">
+                    <option value="STUDENT">STUDENT</option>
+                    <option value="COMPANY">COMPANY</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label>Skills</label>
+                  <input type="text" [(ngModel)]="profile.skills" name="skills" class="form-control bg-light">
+                </div>
+                <div class="col-md-6">
+                  <label>CV URL</label>
+                  <input type="text" [(ngModel)]="profile.cvUrl" name="cvUrl" class="form-control bg-light">
+                </div>
+
+                <div class="col-md-6">
+                  <label>Current Password</label>
+                  <input type="password" [(ngModel)]="currentPassword" name="currentPassword" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label>New Password</label>
+                  <input type="password" [(ngModel)]="newPassword" name="newPassword" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label>Confirm New Password</label>
+                  <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control">
+                </div>
+
+                <div class="col-12 mt-3">
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                  <button type="reset" class="btn btn-outline-secondary"><i class="fas fa-times"></i> Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

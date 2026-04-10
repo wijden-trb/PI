@@ -1,0 +1,44 @@
+<div class="register-container">
+  <div class="form-wrapper">
+    <h2>Register</h2>
+    <p>Create your account</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="auth-form">
+      <div class="input-group">
+        <input type="text" formControlName="firstName" placeholder="First Name" />
+      </div>
+      <div class="input-group">
+        <input type="text" formControlName="lastName" placeholder="Last Name" />
+      </div>
+      <div class="input-group">
+        <input type="email" formControlName="email" placeholder="Email" />
+      </div>
+      <div class="input-group">
+        <input type="password" formControlName="password" placeholder="Password" />
+      </div>
+      <div class="input-group">
+        <select formControlName="role">
+          <option value="STUDENT">STUDENT</option>
+          <option value="COMPANY">COMPANY</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <input type="text" formControlName="skills" placeholder="Skills" />
+      </div>
+      <div class="input-group">
+        <input type="text" formControlName="cvUrl" placeholder="CV URL" />
+      </div>
+
+      <button type="submit" class="auth-button">Register Now</button>
+    </form>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>

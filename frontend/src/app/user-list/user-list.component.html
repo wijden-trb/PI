@@ -1,0 +1,48 @@
+<div class="card">
+  <h2>Add User</h2>
+
+  <form class="add-user-form" (ngSubmit)="addUser()" #userForm="ngForm">
+    <input [(ngModel)]="newUser.firstName" name="firstName" placeholder="First Name" required>
+    <input [(ngModel)]="newUser.lastName" name="lastName" placeholder="Last Name" required>
+    <input [(ngModel)]="newUser.email" name="email" placeholder="Email" required>
+    <input [(ngModel)]="newUser.password" name="password" type="password" placeholder="Password" required>
+
+    <select [(ngModel)]="newUser.role" name="role" required>
+      <option value="STUDENT">STUDENT</option>
+      <option value="COMPANY">COMPANY</option>
+      <option value="ADMIN">ADMIN</option>
+    </select>
+
+    <input [(ngModel)]="newUser.skills" name="skills" placeholder="Skills">
+    <input [(ngModel)]="newUser.cvUrl" name="cvUrl" placeholder="CV URL">
+
+    <button type="submit" class="add-btn">Add User</button>
+  </form>
+
+  <hr>
+
+  <h2>User List</h2>
+
+  <table class="user-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.firstName}} {{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.role}}</td>
+      <td>
+        <button (click)="deleteUser(user.id!)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
