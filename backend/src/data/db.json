@@ -1,0 +1,205 @@
+{
+  "missions": [
+    {
+      "id": "f6b8b8e7-f08d-4aa4-8311-188a66e81ec1",
+      "title": "Mission test angular",
+      "description": "Mission test angular",
+      "budget": 999999,
+      "skills": [
+        "angular"
+      ],
+      "status": "open",
+      "ownerEmail": "test@test9999.com",
+      "demoUrl": "",
+      "comments": []
+    },
+    {
+      "id": "2665e19c-2314-433d-8733-4aed0389187c",
+      "title": "Mission test 2",
+      "description": "Mission test 2",
+      "budget": 1180,
+      "skills": [
+        "web"
+      ],
+      "status": "open",
+      "ownerEmail": "test@test.com",
+      "demoUrl": "",
+      "comments": [
+        {
+          "author": "test@test.com",
+          "text": "C'est une bonne mission",
+          "date": "2026-04-30T16:22:51.615Z"
+        }
+      ]
+    },
+    {
+      "id": "f7bc483b-7b0d-47d3-b747-229363e1f348",
+      "title": "Mission de test",
+      "description": "On teste notre projet",
+      "budget": 995,
+      "skills": [
+        "Competence test"
+      ],
+      "status": "open",
+      "ownerEmail": "malekkassem80@gmail.com",
+      "demoUrl": "",
+      "comments": [
+        {
+          "author": "malekkassem80@gmail.com",
+          "text": "trés bonne mission",
+          "date": "2026-04-30T16:16:16.862Z"
+        }
+      ]
+    },
+    {
+      "id": "216ac086-b6b9-4133-8b1a-d78ea3b65225",
+      "title": "Application de gestion RH",
+      "description": "Développer un module RH avec dashboard, rôles, workflow et reporting.",
+      "budget": 1800,
+      "skills": [
+        "Angular",
+        "Node.js",
+        "MongoDB",
+        "Dashboard"
+      ],
+      "status": "open",
+      "ownerEmail": "client1@mail.com",
+      "demoUrl": "",
+      "comments": [
+        {
+          "author": "admin",
+          "text": "Mission prioritaire"
+        },
+        {
+          "author": "malekkassem80@gmail.com",
+          "text": "une bonne mission",
+          "date": "2026-05-04T19:44:46.658Z"
+        }
+      ]
+    },
+    {
+      "id": "0c6447b7-1b04-442c-b24a-c6de98550cce",
+      "title": "Site vitrine freelance",
+      "description": "Créer un front office public responsive avec espace admin et publication de missions.",
+      "budget": 900,
+      "skills": [
+        "Angular",
+        "UI",
+        "CSS",
+        "SEO"
+      ],
+      "status": "open",
+      "ownerEmail": "client2@mail.com",
+      "comments": []
+    }
+  ],
+  "developers": [
+    {
+      "id": "eca176cd-8e25-4400-af68-eb4c72243a85",
+      "name": "chahine",
+      "email": "chahine@gmail.com",
+      "skills": [
+        "WEB"
+      ],
+      "level": "mid",
+      "rate": 5,
+      "availability": "available",
+      "permissions": [
+        "apply",
+        "demo",
+        "comment"
+      ]
+    },
+    {
+      "id": "0b16dc99-ac6e-4db9-9a2e-752d9b4c91af",
+      "name": "Devesprittest",
+      "email": "test@test.com",
+      "skills": [
+        "web scrap"
+      ],
+      "level": "junior",
+      "rate": 5,
+      "availability": "available",
+      "permissions": [
+        "apply",
+        "demo",
+        "comment"
+      ]
+    },
+    {
+      "id": "35c6c0f6-853a-467d-beed-0481b0c01443",
+      "name": "Esprit",
+      "email": "esprit@gmail.com",
+      "skills": [
+        "agile dev wen"
+      ],
+      "level": "junior",
+      "rate": 5,
+      "availability": "available",
+      "permissions": [
+        "apply",
+        "demo",
+        "comment"
+      ]
+    },
+    {
+      "id": "051c02bd-08b7-4f9a-b128-90bf7fc55c79",
+      "name": "Malek",
+      "email": "malek@mail.com",
+      "skills": [
+        "Angular",
+        "Node.js",
+        "MongoDB",
+        "QlikView",
+        "Dashboard"
+      ],
+      "level": "mid",
+      "rate": 120,
+      "availability": "available",
+      "permissions": [
+        "apply",
+        "demo",
+        "comment"
+      ]
+    },
+    {
+      "id": "6ef08875-5a79-4584-bd86-ecd5581df4b5",
+      "name": "Sarra",
+      "email": "sarra@mail.com",
+      "skills": [
+        "UI",
+        "CSS",
+        "Angular",
+        "SEO"
+      ],
+      "level": "senior",
+      "rate": 180,
+      "availability": "available",
+      "permissions": [
+        "apply",
+        "demo",
+        "comment"
+      ]
+    },
+    {
+      "id": "687039c4-60c1-45cb-8b78-3228ecb5f0c2",
+      "name": "Ahmed",
+      "email": "ahmed@mail.com",
+      "skills": [
+        "Python",
+        "AI",
+        "Matching",
+        "API"
+      ],
+      "level": "senior",
+      "rate": 220,
+      "availability": "busy",
+      "permissions": [
+        "apply",
+        "demo",
+        "comment"
+      ]
+    }
+  ],
+  "assignments": []
+}

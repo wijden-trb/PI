@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "projects": {
+    "gestionmissions": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "styles": [
+              "src/styles.css"
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "gestionmissions:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "gestionmissions",
+  "cli": {
+    "analytics": false
+  }
+}

@@ -1,0 +1,1 @@
+{"compilerOptions":{"strict":false,"skipLibCheck":true,"esModuleInterop":true,"experimentalDecorators":true,"target":"ES2022","module":"ES2022","moduleResolution":"node","useDefineForClassFields":false,"lib":["ES2022","dom"]}}
