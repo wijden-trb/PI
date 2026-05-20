@@ -19,6 +19,10 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+            "polyfills": [
+              "zone.js",
+              "src/polyfills.ts"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -26,6 +30,9 @@
               }
             ],
             "styles": [
+              "node_modules/@coreui/icons/css/all.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@coreui/coreui/dist/css/coreui.min.css",
               "src/styles.css"
             ],
             "server": "src/main.server.ts",

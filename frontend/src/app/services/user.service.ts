@@ -12,23 +12,37 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // GET ALL
+  // GET ALL USERS
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
 
-  // CREATE
+  // CREATE USER (REGISTER)
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/register`, user);
   }
 
-  // UPDATE
+  // UPDATE USER
   updateUser(id: number, user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/${id}`, user);
   }
 
-  // DELETE
+  // LOGIN
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, data);
+  }
+
+  // DELETE USER
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  // UPLOAD CV (Cloudinary → backend → DB)
+  uploadCv(formData: FormData): Observable<any> {
+    return this.http.post(
+      'http://localhost:8081/api/users/upload-cv',
+      formData
+    );
+  }
+
 }

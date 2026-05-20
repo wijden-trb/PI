@@ -1,44 +1,66 @@
-<div class="register-container">
-  <div class="form-wrapper">
-    <h2>Register</h2>
-    <p>Create your account</p>
+<div class="auth-buttons">
+  <button class="auth-button" (click)="openLogin()">Login</button>
+  <button class="auth-button" (click)="openRegister()">Register</button><div class="social-login">
+  <a href="http://localhost:8081/oauth2/authorization/linkedin"
+     class="btn-linkedin">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0
+               5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966
+               0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783
+               1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4
+               0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+    </svg>
+    Sign in with LinkedIn
+  </a>
+</div>
+</div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="auth-form">
-      <div class="input-group">
-        <input type="text" formControlName="firstName" placeholder="First Name" />
-      </div>
-      <div class="input-group">
-        <input type="text" formControlName="lastName" placeholder="Last Name" />
-      </div>
-      <div class="input-group">
-        <input type="email" formControlName="email" placeholder="Email" />
-      </div>
-      <div class="input-group">
-        <input type="password" formControlName="password" placeholder="Password" />
-      </div>
-      <div class="input-group">
+<!-- MODAL -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-box">
+
+    <span class="close-btn" (click)="closeModal()">✖</span>
+
+    <!-- LOGIN -->
+    <div *ngIf="isLoginMode">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+        <input type="email" formControlName="email" placeholder="Email">
+        <input type="password" formControlName="password" class="form-control" />
+        <button type="submit" class="auth-button">Login</button>
+      </form>
+    </div>
+
+    <!-- REGISTER -->
+    <div *ngIf="!isLoginMode">
+      <h2>Register</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+        <input type="text" formControlName="firstName" placeholder="First Name">
+        <input type="text" formControlName="lastName" placeholder="Last Name">
+        <input type="email" formControlName="email" placeholder="Email">
+        <input type="password" formControlName="password" placeholder="Password">
+
         <select formControlName="role">
           <option value="STUDENT">STUDENT</option>
           <option value="COMPANY">COMPANY</option>
           <option value="ADMIN">ADMIN</option>
         </select>
-      </div>
-      <div class="input-group">
-        <input type="text" formControlName="skills" placeholder="Skills" />
-      </div>
-      <div class="input-group">
-        <input type="text" formControlName="cvUrl" placeholder="CV URL" />
-      </div>
 
-      <button type="submit" class="auth-button">Register Now</button>
-    </form>
+        <input type="text" formControlName="skills" placeholder="Skills">
 
+        <input type="file" class="form-control" (change)="onFileSelected($event)" accept=".pdf">
+
+        <button type="submit" class="auth-button">Register</button>
+      </form>
+    </div>
+
+    <!-- Messages -->
     <div *ngIf="successMessage" class="success-message">
       {{ successMessage }}
     </div>
-
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
+
   </div>
 </div>

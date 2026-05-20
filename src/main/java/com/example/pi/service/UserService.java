@@ -1,7 +1,9 @@
 package com.example.pi.service;
 
+import com.example.pi.DTO.AuthResponse;
 import com.example.pi.entity.User;
 import com.example.pi.repository.UserRepository;
+import com.example.pi.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -81,5 +83,20 @@ public class UserService {
         if (user.getRole() == null) {
             throw new IllegalArgumentException("Role is required");
         }
+    }
+    @Autowired
+    private JwtService jwtService;
+
+    public AuthResponse login(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        String token = jwtService.generateToken(email);
+
+        return new AuthResponse(token, user);
     }
 }

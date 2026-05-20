@@ -1,0 +1,13 @@
+<div class="loading-container">
+
+  <ng-container *ngIf="!errorMessage">
+    <h2>LinkedIn Authentication...</h2>
+    <p>Please wait, you are being redirected.</p>
+  </ng-container>
+
+  <ng-container *ngIf="errorMessage">
+    <h2>Authentication Failed</h2>
+    <p class="error">{{ errorMessage }}</p>
+  </ng-container>
+
+</div>
