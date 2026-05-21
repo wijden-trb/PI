@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './auth-guard';  // ← capital A, class import
+import { AuthGuard } from './auth-guard';
+import {CvAnalyzerComponent} from './cv-analyzer/cv-analyzer.component';  // ← capital A, class import
 
 export const routes: Routes = [
   {
@@ -19,6 +20,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./oauth-success/oauth-success').then(m => m.OauthSuccess)
   },
+  { path: 'cv-analyzer', component: CvAnalyzerComponent },
   {
     path: 'profile',
     loadComponent: () =>

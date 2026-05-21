@@ -1,0 +1,148 @@
+<div class="analyzer-page">
+
+  <!-- ══ HEADER ══════════════════════════════════════════════ -->
+  <div class="page-header">
+    <div class="header-icon">🤖</div>
+    <h1>AI CV Analyzer</h1>
+    <p>Paste your Cloudinary CV URL to get instant AI-powered feedback</p>
+  </div>
+
+  <!-- ══ FORM (hidden while loading or result shown) ══════════ -->
+  <div class="card upload-card" *ngIf="!loading && !result">
+
+    <!-- CV URL input -->
+    <div class="form-group">
+      <label>Cloudinary CV URL <span class="required">*</span></label>
+      <input
+        type="url"
+        [(ngModel)]="cvUrl"
+        placeholder="https://res.cloudinary.com/your_cloud/raw/upload/..."
+        class="url-input"
+        (keyup.enter)="analyze()"
+      />
+      <small class="hint">
+        This is the <code>secure_url</code> stored in your database after upload.
+      </small>
+    </div>
+
+    <!-- Job description -->
+    <div class="form-group">
+      <label>Job Description <span class="optional">(optional — improves accuracy)</span></label>
+      <textarea
+        [(ngModel)]="jobDesc"
+        placeholder="Paste the job offer here to get a tailored score..."
+        rows="5"></textarea>
+    </div>
+
+    <!-- Error message -->
+    <p class="error-msg" *ngIf="errorMessage">⚠️ {{ errorMessage }}</p>
+
+    <!-- Submit -->
+    <button
+      class="btn-analyze"
+      (click)="analyze()"
+      [disabled]="!cvUrl.trim()">
+      🔍 Analyze CV
+    </button>
+
+  </div>
+
+  <!-- ══ LOADING ═══════════════════════════════════════════════ -->
+  <div class="loading-card" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Downloading &amp; analyzing your CV…</p>
+    <small>This takes 10–20 seconds</small>
+  </div>
+
+  <!-- ══ RESULTS ═══════════════════════════════════════════════ -->
+  <ng-container *ngIf="result && !loading">
+
+    <!-- Score + summary -->
+    <div class="score-card">
+
+      <!-- Circular progress -->
+      <svg viewBox="0 0 100 100" class="score-circle">
+        <circle cx="50" cy="50" r="45"
+                fill="none" stroke="#e5e7eb" stroke-width="8"/>
+        <circle cx="50" cy="50" r="45"
+                fill="none"
+                [attr.stroke]="getScoreColor()"
+                stroke-width="8"
+                stroke-linecap="round"
+                [attr.stroke-dasharray]="getCircleDash()"
+                transform="rotate(-90 50 50)"/>
+        <text x="50" y="46" text-anchor="middle" class="score-number">
+          {{ result.score }}
+        </text>
+        <text x="50" y="61" text-anchor="middle" class="score-label">/100</text>
+      </svg>
+
+      <div class="score-info">
+        <span class="badge" [ngClass]="getLevelClass()">{{ result.level }}</span>
+        <p class="summary">{{ result.summary }}</p>
+        <div class="match-tags">
+          <span class="tag">💼 {{ result.experienceMatch }}</span>
+          <span class="tag">🎓 {{ result.educationMatch }}</span>
+        </div>
+      </div>
+
+    </div><!-- /score-card -->
+
+    <!-- Detail grid -->
+    <div class="details-grid">
+
+      <!-- Strengths -->
+      <div class="detail-card">
+        <h3>✅ Strengths</h3>
+        <ul>
+          <li *ngFor="let item of result.strengths">{{ item }}</li>
+        </ul>
+        <p class="empty" *ngIf="!result.strengths?.length">None identified.</p>
+      </div>
+
+      <!-- Weaknesses -->
+      <div class="detail-card">
+        <h3>⚠️ Weaknesses</h3>
+        <ul>
+          <li *ngFor="let item of result.weaknesses">{{ item }}</li>
+        </ul>
+        <p class="empty" *ngIf="!result.weaknesses?.length">None identified.</p>
+      </div>
+
+      <!-- Missing Skills -->
+      <div class="detail-card">
+        <h3>❌ Missing Skills</h3>
+        <div class="chips">
+          <span class="chip chip-red"
+                *ngFor="let item of result.missingSkills">{{ item }}</span>
+        </div>
+        <p class="empty" *ngIf="!result.missingSkills?.length">All key skills present.</p>
+      </div>
+
+      <!-- Keywords Matched -->
+      <div class="detail-card">
+        <h3>🔑 Keywords Matched</h3>
+        <div class="chips">
+          <span class="chip chip-green"
+                *ngFor="let item of result.keywordsMatched">{{ item }}</span>
+        </div>
+        <p class="empty" *ngIf="!result.keywordsMatched?.length">No keywords matched.</p>
+      </div>
+
+      <!-- Recommendations — full width -->
+      <div class="detail-card full-width">
+        <h3>💡 Recommendations</h3>
+        <ol>
+          <li *ngFor="let item of result.recommendations">{{ item }}</li>
+        </ol>
+        <p class="empty" *ngIf="!result.recommendations?.length">No recommendations.</p>
+      </div>
+
+    </div><!-- /details-grid -->
+
+    <!-- Reset -->
+    <button class="btn-reset" (click)="reset()">🔄 Analyze another CV</button>
+
+  </ng-container>
+
+</div>

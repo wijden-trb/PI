@@ -1,8 +1,10 @@
 package com.example.pi.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -21,40 +24,49 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF — we use stateless JWT
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // Session is STATELESS — JWT only
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
+                // ← KEY FIX: return 401 JSON instead of redirecting to LinkedIn
+                // Without this, any unauthenticated API call gets redirected to LinkedIn
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.getWriter().write(
+                                    "{\"error\": \"Unauthorized — please login first\"}"
+                            );
+                        })
+                )
+
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints — no token needed
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
-                                "/api/auth/**",          // login, register
-                                "/login/oauth2/**",      // OAuth2 callback from LinkedIn
-                                "/oauth2/**",            // OAuth2 authorization redirect
-                                "/api/users/public/**",  // any public user endpoints
-                                "/ws/**"                 // WebSocket handshake
+                                "/api/auth/**",
+                                "/api/cv/extract-text",
+                                "/api/users/login",
+                                "/api/users/register",
+                                "/login/oauth2/**",
+                                "/oauth2/**",
+                                "/api/users/public/**",
+                                "/ws/**"
                         ).permitAll()
-                        // Everything else requires a valid JWT
                         .anyRequest().authenticated()
                 )
 
-                // Wire up OAuth2 login — Spring handles the /oauth2/authorization/linkedin redirect
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(oAuth2LoginSuccessHandler)
-                        // On failure, redirect Angular to a login page with error param
                         .failureUrl("http://localhost:4200/login?error=oauth_failed")
                 )
 
-                // Add JWT filter BEFORE the username/password filter
-                // shouldNotFilter() inside JwtFilter skips OAuth2 paths automatically
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
